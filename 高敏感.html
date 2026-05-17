@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高敏感与内向特质心理测试 · 真诚共鸣版</title>
+    <style>
+        :root {
+            --bg: #f7f5f2;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5c5c5c;
+            --text-tertiary: #8a8a8a;
+            --accent: #5b8c7a;
+            --accent-light: #e8f0ec;
+            --accent-medium: #8ab8a8;
+            --progress-bg: #e8e5e0;
+            --progress-fill: #5b8c7a;
+            --progress-glow: #7dba9e;
+            --option-hover: #f4f7f5;
+            --option-selected-bg: #ecf3ef;
+            --option-selected-border: #5b8c7a;
+            --option-selected-dot: #5b8c7a;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-stack: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(ellipse at 30% 20%, rgba(91, 140, 122, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 70%, rgba(138, 184, 168, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(180, 170, 155, 0.03) 0%, transparent 70%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        /* ========== 头部 ========== */
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 0 8px;
+        }
+
+        .header-icon {
+            display: inline-block;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eaf4ef 0%, #dcebe3 100%);
+            margin-bottom: 16px;
+            position: relative;
+            line-height: 52px;
+            font-size: 26px;
+            user-select: none;
+        }
+
+        .header h1 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .header .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        /* ========== 进度条区域 ========== */
+        .progress-area {
+            margin-bottom: 20px;
+            padding: 0 4px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.01em;
+        }
+
+        .progress-info .current {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .progress-info .total {
+            color: var(--text-tertiary);
+        }
+
+        .progress-bar-outer {
+            width: 100%;
+            height: 6px;
+            background-color: var(--progress-bg);
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #5b8c7a 0%, #7dba9e 50%, #8cc8ab 100%);
+            border-radius: 99px;
+            transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar-inner::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--progress-fill);
+            box-shadow: 0 0 0 4px rgba(91, 140, 122, 0.12);
+            transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding: 0 2px;
+        }
+
+        .progress-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #dcd8d2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-dot.completed {
+            background-color: var(--accent-medium);
+            box-shadow: 0 0 6px rgba(91, 140, 122, 0.3);
+        }
+
+        .progress-dot.active {
+            background-color: var(--accent);
+            box-shadow: 0 0 8px rgba(91, 140, 122, 0.45);
+            transform: scale(1.5);
+        }
+
+        /* ========== 题目卡片 ========== */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 32px 28px 28px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #5b8c7a 0%, #8ab8a8 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card.fade-out {
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: all 0.25s ease-out;
+        }
+
+        .card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.35s ease-out;
+        }
+
+        .question-number {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            background: var(--accent-light);
+            padding: 5px 14px;
+            border-radius: 99px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            letter-spacing: 0.01em;
+        }
+
+        /* ========== 选项按钮 ========== */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 15px 18px;
+            border: 1.5px solid #e8e5e0;
+            border-radius: var(--radius-md);
+            background: #fafaf8;
+            cursor: pointer;
+            font-family: var(--font-stack);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: all var(--transition-fast);
+            text-align: left;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .option-btn:hover {
+            background: var(--option-hover);
+            border-color: #d5d0c8;
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
+        }
+
+        .option-btn:active {
+            transform: scale(0.985);
+            transition: transform 0.1s ease;
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0ede8;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            transition: all var(--transition-fast);
+            letter-spacing: 0;
+        }
+
+        .option-btn.selected {
+            background: var(--option-selected-bg);
+            border-color: var(--option-selected-border);
+            box-shadow: 0 0 0 3px rgba(91, 140, 122, 0.08);
+            font-weight: 500;
+        }
+
+        .option-btn.selected .option-letter {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(91, 140, 122, 0.25);
+        }
+
+        .option-label {
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        /* ========== 导航按钮 ========== */
+        .nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 0 4px;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 11px 20px;
+            border-radius: 99px;
+            font-family: var(--font-stack);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .btn-prev {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1.5px solid #e0dcd6;
+        }
+
+        .btn-prev:hover {
+            background: #f5f3f0;
+            border-color: #cbc5bd;
+            color: var(--text-primary);
+        }
+
+        .btn-prev:active {
+            background: #eeeae5;
+            transform: scale(0.96);
+        }
+
+        .btn-prev:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn-next {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(91, 140, 122, 0.25);
+        }
+
+        .btn-next:hover {
+            background: #4d7a69;
+            box-shadow: 0 4px 16px rgba(91, 140, 122, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-next:active {
+            background: #416b5b;
+            transform: scale(0.96);
+        }
+
+        .btn-skip {
+            background: transparent;
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+            padding: 10px 16px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-stack);
+            transition: color var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-skip:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ========== 结果页面 ========== */
+        .result-area {
+            display: none;
+            animation: fadeSlideIn 0.5s ease-out;
+        }
+
+        .result-area.visible {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            padding: 36px 28px 30px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .result-score-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #eaf4ef 0%, #d5e8de 100%);
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 0 0 12px rgba(91, 140, 122, 0.06), 0 8px 30px rgba(91, 140, 122, 0.10);
+        }
+
+        .result-score-inner {
+            text-align: center;
+        }
+
+        .result-score-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .result-score-total {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+            letter-spacing: 0.03em;
+        }
+
+        .result-level {
+            display: inline-block;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 8px 20px;
+            border-radius: 99px;
+            margin-bottom: 18px;
+            letter-spacing: 0.02em;
+        }
+
+        .result-description {
+            text-align: left;
+            background: #fafaf8;
+            border-radius: var(--radius-lg);
+            padding: 22px 20px;
+            margin-top: 16px;
+            line-height: 1.8;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            border: 1px solid #efede8;
+        }
+
+        .result-description h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            margin-top: 16px;
+            letter-spacing: 0.01em;
+        }
+
+        .result-description h4:first-child {
+            margin-top: 0;
+        }
+
+        .result-description p {
+            margin-bottom: 10px;
+        }
+
+        .result-description ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .result-description ul li {
+            margin-bottom: 5px;
+        }
+
+        .btn-restart {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 22px;
+            padding: 13px 28px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            font-family: var(--font-stack);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            box-shadow: 0 2px 12px rgba(91, 140, 122, 0.25);
+            transition: all var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-restart:hover {
+            background: #4d7a69;
+            box-shadow: 0 6px 20px rgba(91, 140, 122, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn-restart:active {
+            transform: scale(0.95);
+            background: #416b5b;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 16px;
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 500px) {
+            body {
+                padding: 12px;
+                align-items: flex-start;
+                padding-top: 24px;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+
+            .header-icon {
+                width: 42px;
+                height: 42px;
+                line-height: 42px;
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+
+            .card {
+                padding: 24px 18px 20px;
+                border-radius: var(--radius-lg);
+            }
+
+            .question-text {
+                font-size: 1.05rem;
+                margin-bottom: 18px;
+            }
+
+            .option-btn {
+                padding: 13px 14px;
+                font-size: 0.9rem;
+                gap: 10px;
+                border-radius: var(--radius-sm);
+            }
+
+            .option-letter {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+
+            .btn-nav {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+
+            .result-card {
+                padding: 28px 16px 22px;
+            }
+
+            .result-score-circle {
+                width: 100px;
+                height: 100px;
+                box-shadow: 0 0 0 8px rgba(91, 140, 122, 0.06), 0 6px 20px rgba(91, 140, 122, 0.08);
+            }
+
+            .result-score-number {
+                font-size: 2.3rem;
+            }
+
+            .result-description {
+                padding: 16px 14px;
+                font-size: 0.85rem;
+            }
+
+            .progress-dot {
+                width: 4px;
+                height: 4px;
+            }
+            .progress-dots {
+                padding: 0 1px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .card {
+                padding: 20px 14px 16px;
+            }
+            .question-text {
+                font-size: 0.95rem;
+            }
+            .option-btn {
+                padding: 11px 12px;
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            .option-letter {
+                width: 28px;
+                height: 28px;
+                font-size: 0.75rem;
+            }
+            .btn-nav {
+                padding: 9px 13px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-icon">🌿</div>
+            <h1>高敏感与内向特质测试</h1>
+            <p class="subtitle">一些藏在心底的感受，或许这里都懂</p>
+        </div>
+
+        <!-- 进度条区域 -->
+        <div class="progress-area" id="progressArea">
+            <div class="progress-info">
+                <span class="current" id="progressCurrent">第 1 题</span>
+                <span class="total" id="progressTotal">共 20 题</span>
+            </div>
+            <div class="progress-bar-outer">
+                <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
+            </div>
+            <div class="progress-dots" id="progressDots"></div>
+        </div>
+
+        <!-- 题目卡片 -->
+        <div class="card fade-in" id="questionCard">
+            <span class="question-number" id="questionNumber">Q1</span>
+            <p class="question-text" id="questionText"></p>
+            <div class="options-list" id="optionsList"></div>
+        </div>
+
+        <!-- 导航按钮 -->
+        <div class="nav-area" id="navArea">
+            <button class="btn-nav btn-prev" id="btnPrev" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                上一题
+            </button>
+            <span style="font-size:0.82rem;color:var(--text-tertiary);" id="navHint">点击选项自动跳转</span>
+            <button class="btn-nav btn-next" id="btnNext" disabled>
+                下一题
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+
+        <!-- 结果区域（初始隐藏） -->
+        <div class="result-area" id="resultArea">
+            <div class="result-card" id="resultCard"></div>
+            <p class="disclaimer">⚠ 本测试仅供参考与自我探索，不构成专业心理诊断。<br>如有需要，请咨询专业心理咨询师。</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== 题目数据（真诚共鸣版） ====================
+            const questions = [{
+                id: 1,
+                text: '结束一场热闹的聚会后，即使当时很开心，你也会在回家的路上感到一种深深的疲惫，好像能量被悄悄抽走了。',
+                options: [
+                    'A. 完全不符合——聚会后我反而更精神',
+                    'B. 不太符合——偶尔会累，但很快恢复',
+                    'C. 比较符合——经常感到明显的消耗',
+                    'D. 非常符合——每次结束都想立刻躲回自己的空间',
+                ],
+            }, {
+                id: 2,
+                text: '你常常能察觉房间里气氛的微妙变化——比如有人不开心却还在微笑，而其他人可能毫无感觉。',
+                options: [
+                    'A. 完全不符合——我很少注意这些',
+                    'B. 不太符合——有时能感觉到，但不确定',
+                    'C. 比较符合——经常能捕捉到这种隐藏的情绪',
+                    'D. 非常符合——这几乎是一种本能，躲都躲不掉',
+                ],
+            }, {
+                id: 3,
+                text: '比起一口气认识很多人，你更喜欢慢慢和一个能真正说话的人待在一起，哪怕只是安静地坐着。',
+                options: [
+                    'A. 完全不符合——我享受认识新朋友的快感',
+                    'B. 不太符合——看情况，有时也想热闹',
+                    'C. 比较符合——深度连接让我更安心',
+                    'D. 非常符合——一个懂我的人胜过千百个泛泛之交',
+                ],
+            }, {
+                id: 4,
+                text: '突然的敲门声、尖锐的电话铃或者背后传来的汽车鸣笛，会让你心跳加速，甚至一整天都隐隐不安。',
+                options: [
+                    'A. 完全不符合——这些声音对我没什么影响',
+                    'B. 不太符合——偶尔被吓一跳，但很快平复',
+                    'C. 比较符合——经常被突然的声响惊到',
+                    'D. 非常符合——我对这类刺激异常敏感，需要很久才能缓过来',
+                ],
+            }, {
+                id: 5,
+                text: '在做重要决定之前，你的大脑里会反复上演“如果…会怎样”的场景，哪怕只是选一件衣服、点一个菜。',
+                options: [
+                    'A. 完全不符合——我通常凭直觉快速决定',
+                    'B. 不太符合——大事会想，小事很随意',
+                    'C. 比较符合——多数时候都会在心里翻来覆去地琢磨',
+                    'D. 非常符合——连最小的事我也能纠结很久，生怕选错',
+                ],
+            }, {
+                id: 6,
+                text: '你需要的“充电”方式往往不是狂欢，而是一个人静静地看书、散步、听音乐，或者干脆什么都不做。',
+                options: [
+                    'A. 完全不符合——我需要通过热闹来恢复能量',
+                    'B. 不太符合——有时独处，有时热闹，看心情',
+                    'C. 比较符合——独处是我恢复精力的主要方式',
+                    'D. 非常符合——只有充分的独处，我才能感觉自己又“活”过来',
+                ],
+            }, {
+                id: 7,
+                text: '别人随口说的一句评价，你可能会在心里反复咀嚼好几天，琢磨对方是不是对你有看法。',
+                options: [
+                    'A. 完全不符合——我听完就忘了',
+                    'B. 不太符合——偶尔会想，但很快就放下',
+                    'C. 比较符合——经常忍不住反复回忆和解读',
+                    'D. 非常符合——一句话能在我心里掀起巨大的波澜',
+                ],
+            }, {
+                id: 8,
+                text: '你发现自己对咖啡、浓茶甚至可乐特别敏感，喝一点点就可能心慌、手抖或者整夜失眠。',
+                options: [
+                    'A. 完全不符合——咖啡因对我完全没影响',
+                    'B. 不太符合——大量摄入才会有反应',
+                    'C. 比较符合——少量就会让我明显不适',
+                    'D. 非常符合——我几乎不敢碰，反应强烈到害怕',
+                ],
+            }, {
+                id: 9,
+                text: '当看到别人痛苦或流泪时，你内心会涌起一种几乎感同身受的难过，甚至会跟着眼眶发热。',
+                options: [
+                    'A. 完全不符合——我能理性看待别人的情绪',
+                    'B. 不太符合——会同情，但不至于被卷入',
+                    'C. 比较符合——经常被他人的情绪深深感染',
+                    'D. 非常符合——我好像一块情绪海绵，吸收着周围的一切悲喜',
+                ],
+            }, {
+                id: 10,
+                text: '你常常被一些细微的美好击中——比如树叶缝隙的光影、雨滴落在窗上的声音，或是旧书的气息。',
+                options: [
+                    'A. 完全不符合——我很少留意这些小事',
+                    'B. 不太符合——偶尔会注意到',
+                    'C. 比较符合——经常被这些小细节打动',
+                    'D. 非常符合——这些瞬间是我生活里很重要的光亮',
+                ],
+            }, {
+                id: 11,
+                text: '当任务堆在一起、同时有多件事需要处理时，你容易感到大脑“过载”，甚至身体也会跟着僵硬。',
+                options: [
+                    'A. 完全不符合——多线程处理让我很兴奋',
+                    'B. 不太符合——偶尔会乱，但能应付',
+                    'C. 比较符合——经常被多重任务压得喘不过气',
+                    'D. 非常符合——哪怕只是两件小事同时来，我都会瞬间焦虑',
+                ],
+            }, {
+                id: 12,
+                text: '你很少主动发起闲聊，但在信任的朋友面前，你其实可以滔滔不绝地说上好几个小时。',
+                options: [
+                    'A. 完全不符合——我在任何人面前都很健谈',
+                    'B. 不太符合——分人，但整体还算主动',
+                    'C. 比较符合——只在极少数人面前才会真正敞开',
+                    'D. 非常符合——我的“话匣子”只对极亲密的人开放',
+                ],
+            }, {
+                id: 13,
+                text: '冲突和争执会让你内心久久无法平静，即使表面上已经解决，你也会在脑海里重演很多遍。',
+                options: [
+                    'A. 完全不符合——吵完架我马上就能翻篇',
+                    'B. 不太符合——会不舒服，但很快就能放下',
+                    'C. 比较符合——经常被争执的后劲困扰很久',
+                    'D. 非常符合——为了避免冲突，我甚至宁愿自己默默承受委屈',
+                ],
+            }, {
+                id: 14,
+                text: '比起广阔的社交网络，你更愿意维护一个很小但足够安全的朋友圈，那里你可以不假装、不逞强。',
+                options: [
+                    'A. 完全不符合——我热衷于拓展人脉',
+                    'B. 不太符合——两者都需要',
+                    'C. 比较符合——小而深的关系圈让我更自在',
+                    'D. 非常符合——我的人生只需要一两个真正懂我的人',
+                ],
+            }, {
+                id: 15,
+                text: '你经常被人说“想太多”“太敏感了”，甚至你也曾怀疑自己是不是过于脆弱，不该有这样的反应。',
+                options: [
+                    'A. 完全不符合——从没人这样说过我',
+                    'B. 不太符合——偶尔有人提过',
+                    'C. 比较符合——听过很多次类似的话',
+                    'D. 非常符合——这几乎成了别人对我的标签',
+                ],
+            }, {
+                id: 16,
+                text: '在开始新的一天之前，你往往需要一段安静的“预热”时间，比如独自喝杯水、发会儿呆，否则会感觉仓促不安。',
+                options: [
+                    'A. 完全不符合——我醒来就能立刻投入忙碌',
+                    'B. 不太符合——偶尔需要，但不是必需',
+                    'C. 比较符合——经常需要这样慢慢醒来的缓冲',
+                    'D. 非常符合——没有这段安静时间，我一整天都会不对劲',
+                ],
+            }, {
+                id: 17,
+                text: '你对艺术、文字或音乐里的情绪极度敏锐，一首歌就能让你泪流满面，或是一幅画让你驻足很久。',
+                options: [
+                    'A. 完全不符合——这些很难触动我',
+                    'B. 不太符合——偶尔会被打动',
+                    'C. 比较符合——常常被作品里的情绪深深击中',
+                    'D. 非常符合——我常觉得那些作品写的就是我内心的话',
+                ],
+            }, {
+                id: 18,
+                text: '计划被打乱时，哪怕只是一件小事，你也会感到一阵强烈的烦躁和不安，需要重新在内心整理秩序。',
+                options: [
+                    'A. 完全不符合——变化对我来说很轻松',
+                    'B. 不太符合——会有不适，但很快适应',
+                    'C. 比较符合——经常因计划突变而感到焦虑',
+                    'D. 非常符合——突如其来的改变会让我瞬间失去安全感',
+                ],
+            }, {
+                id: 19,
+                text: '你常常在深夜才觉得真正属于自己，白天的社交和喧嚣褪去后，内心的声音才变得清晰。',
+                options: [
+                    'A. 完全不符合——我白天和夜晚状态差不多',
+                    'B. 不太符合——偶尔喜欢夜晚，但不依赖',
+                    'C. 比较符合——夜晚的独处时光对我非常重要',
+                    'D. 非常符合——深夜才是我灵魂最自由的时刻',
+                ],
+            }, {
+                id: 20,
+                text: '回顾这些题目时，你有一种被轻轻接住的感觉——原来这些难以言说的感受，并不是你一个人独有的。',
+                options: [
+                    'A. 完全没有这种感觉',
+                    'B. 有一点点，但不太确定',
+                    'C. 比较有共鸣，很多题目说到心坎里',
+                    'D. 深深共鸣，好像有人在替我描述内心世界',
+                ],
+            }];
+
+            // ==================== 状态管理 ====================
+            const totalQuestions = questions.length;
+            const userAnswers = new Array(totalQuestions).fill(null); // null = 未作答
+            let currentIndex = 0;
+            let isTransitioning = false;
+
+            // ==================== DOM 元素 ====================
+            const progressBar = document.getElementById('progressBar');
+            const progressCurrent = document.getElementById('progressCurrent');
+            const progressDots = document.getElementById('progressDots');
+            const questionCard = document.getElementById('questionCard');
+            const questionNumber = document.getElementById('questionNumber');
+            const questionText = document.getElementById('questionText');
+            const optionsList = document.getElementById('optionsList');
+            const btnPrev = document.getElementById('btnPrev');
+            const btnNext = document.getElementById('btnNext');
+            const navHint = document.getElementById('navHint');
+            const navArea = document.getElementById('navArea');
+            const resultArea = document.getElementById('resultArea');
+            const resultCard = document.getElementById('resultCard');
+            const progressArea = document.getElementById('progressArea');
+
+            // ==================== 初始化进度点 ====================
+            function buildProgressDots() {
+                progressDots.innerHTML = '';
+                for (let i = 0; i < totalQuestions; i++) {
+                    const dot = document.createElement('span');
+                    dot.classList.add('progress-dot');
+                    dot.dataset.index = i;
+                    progressDots.appendChild(dot);
+                }
+            }
+            buildProgressDots();
+
+            // ==================== 更新进度条 ====================
+            function updateProgress() {
+                const answeredCount = userAnswers.filter(a => a !== null).length;
+                const percentage = Math.round((answeredCount / totalQuestions) * 100);
+                progressBar.style.width = percentage + '%';
+                progressCurrent.textContent = `第 ${currentIndex + 1} 题`;
+
+                const dots = progressDots.querySelectorAll('.progress-dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.remove('completed', 'active');
+                    if (userAnswers[i] !== null) {
+                        dot.classList.add('completed');
+                    }
+                    if (i === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                });
+
+                btnPrev.disabled = currentIndex === 0;
+                const hasCurrentAnswer = userAnswers[currentIndex] !== null;
+                btnNext.disabled = !hasCurrentAnswer;
+
+                if (currentIndex === totalQuestions - 1 && hasCurrentAnswer) {
+                    btnNext.textContent = '查看结果';
+                    btnNext.style.background = '#3d6b57';
+                } else {
+                    btnNext.textContent = '下一题';
+                    btnNext.style.background = '';
+                }
+
+                if (hasCurrentAnswer && currentIndex < totalQuestions - 1) {
+                    navHint.textContent = '已选择，点击下一题或继续选择';
+                } else if (!hasCurrentAnswer) {
+                    navHint.textContent = '请选择一个选项';
+                } else if (currentIndex === totalQuestions - 1 && hasCurrentAnswer) {
+                    navHint.textContent = '全部完成！点击查看结果';
+                }
+            }
+
+            // ==================== 渲染题目 ====================
+            function renderQuestion(index, direction = 'forward') {
+                if (index < 0 || index >= totalQuestions) return;
+                currentIndex = index;
+                const q = questions[index];
+
+                questionCard.classList.add('fade-out');
+
+                setTimeout(() => {
+                    questionNumber.textContent = `Q${q.id}`;
+                    questionText.textContent = q.text;
+                    optionsList.innerHTML = '';
+
+                    q.options.forEach((optText, optIndex) => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('option-btn');
+                        const letter = String.fromCharCode(65 + optIndex);
+                        btn.innerHTML = `
+                                    <span class="option-letter">${letter}</span>
+                                    <span class="option-label">${optText.substring(3).trim()}</span>
+                                `;
+                        btn.addEventListener('click', () => {
+                            if (isTransitioning) return;
+                            selectOption(index, optIndex);
+                        });
+
+                        if (userAnswers[index] === optIndex) {
+                            btn.classList.add('selected');
+                        }
+
+                        optionsList.appendChild(btn);
+                    });
+
+                    questionCard.classList.remove('fade-out');
+                    questionCard.classList.add('fade-in');
+                    setTimeout(() => {
+                        questionCard.classList.remove('fade-in');
+                    }, 350);
+
+                    updateProgress();
+                }, 200);
+            }
+
+            // ==================== 选择选项 ====================
+            function selectOption(questionIndex, optionIndex) {
+                if (isTransitioning) return;
+                userAnswers[questionIndex] = optionIndex;
+
+                const allOptions = optionsList.querySelectorAll('.option-btn');
+                allOptions.forEach((btn, i) => {
+                    if (i === optionIndex) {
+                        btn.classList.add('selected');
+                    } else {
+                        btn.classList.remove('selected');
+                    }
+                });
+
+                updateProgress();
+
+                if (questionIndex < totalQuestions - 1) {
+                    isTransitioning = true;
+                    setTimeout(() => {
+                        isTransitioning = false;
+                        goToQuestion(questionIndex + 1);
+                    }, 450);
+                } else if (questionIndex === totalQuestions - 1) {
+                    isTransitioning = true;
+                    setTimeout(() => {
+                        isTransitioning = false;
+                        showResults();
+                    }, 500);
+                }
+            }
+
+            // ==================== 跳转题目 ====================
+            function goToQuestion(index) {
+                if (index < 0 || index >= totalQuestions) return;
+                if (isTransitioning && index !== currentIndex) return;
+                renderQuestion(index);
+                questionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // ==================== 按钮事件 ====================
+            btnPrev.addEventListener('click', () => {
+                if (currentIndex > 0 && !isTransitioning) {
+                    goToQuestion(currentIndex - 1);
+                }
+            });
+
+            btnNext.addEventListener('click', () => {
+                if (isTransitioning) return;
+                if (currentIndex < totalQuestions - 1 && userAnswers[currentIndex] !== null) {
+                    goToQuestion(currentIndex + 1);
+                } else if (currentIndex === totalQuestions - 1 && userAnswers[currentIndex] !== null) {
+                    showResults();
+                }
+            });
+
+            // ==================== 键盘快捷键 ====================
+            document.addEventListener('keydown', (e) => {
+                if (isTransitioning) return;
+                if (resultArea.classList.contains('visible')) return;
+
+                const key = e.key.toLowerCase();
+                if (key === 'a' || key === 'b' || key === 'c' || key === 'd') {
+                    const optIndex = key.charCodeAt(0) - 97;
+                    if (optIndex >= 0 && optIndex < 4) {
+                        e.preventDefault();
+                        selectOption(currentIndex, optIndex);
+                    }
+                } else if (key === 'arrowleft' && currentIndex > 0) {
+                    e.preventDefault();
+                    goToQuestion(currentIndex - 1);
+                } else if (key === 'arrowright' && userAnswers[currentIndex] !== null && currentIndex < totalQuestions - 1) {
+                    e.preventDefault();
+                    goToQuestion(currentIndex + 1);
+                } else if (key === 'enter' && userAnswers[currentIndex] !== null && currentIndex === totalQuestions - 1) {
+                    e.preventDefault();
+                    showResults();
+                }
+            });
+
+            // ==================== 显示结果 ====================
+            function showResults() {
+                const allAnswered = userAnswers.every(a => a !== null);
+                if (!allAnswered) {
+                    const firstUnanswered = userAnswers.findIndex(a => a === null);
+                    if (firstUnanswered >= 0) {
+                        alert(`请先完成第 ${firstUnanswered + 1} 题后再查看结果。`);
+                        goToQuestion(firstUnanswered);
+                        return;
+                    }
+                }
+
+                const totalScore = userAnswers.reduce((sum, answer) => sum + answer + 1, 0);
+                const maxScore = totalQuestions * 4;
+
+                let level, levelColor, descriptionHTML;
+                if (totalScore >= 71) {
+                    level = '高度敏感 · 深度内向型';
+                    levelColor = '#3d6b57';
+                    descriptionHTML = `
+                                <h4>🌙 你拥有一个深邃而敏感的灵魂</h4>
+                                <p>你的得分表明你具有显著的<strong>高敏感（HSP）</strong>与<strong>深度内向</strong>特质。这不是缺陷，而是一种独特的天赋配置。你能够感知到别人忽略的细节，内心世界丰富而细腻。</p>
+                                <h4>✨ 你的光芒：</h4>
+                                <ul>
+                                    <li><strong>深刻的自省力：</strong>你习惯于深入思考，对生命的意义有独特的理解。</li>
+                                    <li><strong>卓越的共情能力：</strong>你能真切地感受到他人的情绪，是很好的倾听者和支持者。</li>
+                                    <li><strong>敏锐的审美触觉：</strong>日常中的点滴美好，在你眼中都可能成为动人的风景。</li>
+                                    <li><strong>珍视深度的关系：</strong>你不喜欢肤浅的社交，但少数几个知己足以滋养你的生命。</li>
+                                </ul>
+                                <h4>🛡 温柔提醒：</h4>
+                                <ul>
+                                    <li>请保护好自己的能量，学会对过度刺激说“不”。</li>
+                                    <li>规律的独处和安静时光，对你来说不是奢侈，而是必需。</li>
+                                    <li>你的敏感不是“想太多”，而是一种深度信息处理方式。</li>
+                                    <li>找到适合你节奏的环境，你的细腻会成为巨大的优势。</li>
+                                </ul>
+                                <p style="margin-top:12px;">你不需要变得“钝感”，世界需要你这样温柔而深刻的灵魂。🌿</p>
+                            `;
+                } else if (totalScore >= 56) {
+                    level = '中高敏感 · 偏内向型';
+                    levelColor = '#5b8c7a';
+                    descriptionHTML = `
+                                <h4>🌾 你的敏感与内向，是温和而坚韧的力量</h4>
+                                <p>你的得分显示出<strong>较明显的高敏感倾向</strong>和<strong>偏内向</strong>的性格底色。你常常能在安静中找到力量，也能够在适当的时候投入外部世界。</p>
+                                <h4>✨ 你的特质：</h4>
+                                <ul>
+                                    <li>兼具思考的深度和一定的适应力，能够在不同场合调整自己。</li>
+                                    <li>对他人的情绪有着敏锐的雷达，同时也知道何时该抽离保护自己。</li>
+                                    <li>享受独处的自由，也珍惜真诚的对话。</li>
+                                    <li>在很多情境下，你会先观察再行动，这种谨慎常常让你避开麻烦。</li>
+                                </ul>
+                                <h4>🛡 平衡建议：</h4>
+                                <ul>
+                                    <li>注意识别哪些场合会让你感到消耗，预先做好能量管理。</li>
+                                    <li>不要因为别人的“你太敏感”而否定自己的感受，你的感觉是真实的。</li>
+                                    <li>给自己足够的时间去做决定和消化经历，这很正常。</li>
+                                </ul>
+                            `;
+                } else if (totalScore >= 41) {
+                    level = '中等敏感 · 混合型';
+                    levelColor = '#6b9080';
+                    descriptionHTML = `
+                                <h4>🌤 你游走在安静与热闹之间，拥有灵活的弹性</h4>
+                                <p>你的得分表明<strong>中等的敏感度</strong>和一种<strong>混合型</strong>的内在倾向。你并非极端内向，但也能深刻体会独处的价值；你并非粗糙，但也懂得屏蔽不必要的干扰。</p>
+                                <h4>✨ 你的样子：</h4>
+                                <ul>
+                                    <li>你可以适应不同的社交节奏，但内心清楚自己的舒适区在哪里。</li>
+                                    <li>有时会被细腻的情感触动，有时也能轻松地让它过去。</li>
+                                    <li>对生活既有务实的应对，也有诗意的觉察。</li>
+                                </ul>
+                                <h4>🛡 探索方向：</h4>
+                                <ul>
+                                    <li>留意自己在什么状态下最放松、最有创造力，然后去创造那样的时刻。</li>
+                                    <li>你身上或许同时住着一个爱安静的灵魂和一个爱世界的孩子，两者并不矛盾。</li>
+                                </ul>
+                            `;
+                } else if (totalScore >= 26) {
+                    level = '较低敏感 · 偏外向型';
+                    levelColor = '#8a9e8f';
+                    descriptionHTML = `
+                                <h4>☀️ 你的能量更多向外伸展，世界是你的游乐场</h4>
+                                <p>你的得分反映出<strong>较低程度的敏感特质</strong>和<strong>偏外向</strong>的风格。热闹的环境和多样的刺激对你而言更像是能量的来源，而非负担。</p>
+                                <h4>✨ 你的优势：</h4>
+                                <ul>
+                                    <li>适应力强，能够轻松应对变化和突发状况。</li>
+                                    <li>情绪通常比较稳定，不容易被小事困扰。</li>
+                                    <li>乐于接触新的人群和事物，生活体验丰富。</li>
+                                </ul>
+                                <h4>🛡 友善提醒：</h4>
+                                <ul>
+                                    <li>你的韧性是一种礼物，但也别忘了偶尔停下来听听内心细微的声音。</li>
+                                    <li>你身边可能就有高度敏感的朋友，你的轻松或许是他们羡慕的特质。</li>
+                                </ul>
+                            `;
+                } else {
+                    level = '低敏感 · 外向型';
+                    levelColor = '#9aab9d';
+                    descriptionHTML = `
+                                <h4>🌞 你带着明亮的能量，轻松穿梭于人群之间</h4>
+                                <p>你的得分展示出<strong>较低敏感度</strong>和<strong>明显的外向</strong>特质。刺激和社交通常让你感到兴奋和充实，你能从外部世界直接汲取养分。</p>
+                                <h4>✨ 你的色彩：</h4>
+                                <ul>
+                                    <li>精力充沛，喜欢活跃的环境，往往是群体中的带动者。</li>
+                                    <li>对压力和挫折有较强的心理韧性，恢复很快。</li>
+                                    <li>不惧怕尝试和改变，生活充满动态感。</li>
+                                </ul>
+                                <h4>🛡 小小的视角：</h4>
+                                <ul>
+                                    <li>也许有时难以理解为什么有些人会那么“玻璃心”，但请尊重每一种敏感的合理性。</li>
+                                    <li>你的存在本身就能给敏感者带来一种轻松的氛围，这是很好的互补。</li>
+                                </ul>
+                            `;
+                }
+
+                questionCard.style.display = 'none';
+                navArea.style.display = 'none';
+                progressArea.style.display = 'none';
+                document.querySelector('.header').style.marginBottom = '20px';
+
+                resultCard.innerHTML = `
+                            <div class="result-score-circle">
+                                <div class="result-score-inner">
+                                    <div class="result-score-number">${totalScore}</div>
+                                    <div class="result-score-total">/ ${maxScore} 分</div>
+                                </div>
+                            </div>
+                            <div class="result-level" style="background:${levelColor}15;color:${levelColor};border:1px solid ${levelColor}30;">
+                                ${level}
+                            </div>
+                            <div class="result-description">
+                                ${descriptionHTML}
+                            </div>
+                            <button class="btn-restart" onclick="location.reload();">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                重新测试
+                            </button>
+                        `;
+
+                resultArea.classList.add('visible');
+                resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // ==================== 启动测试 ====================
+            function init() {
+                renderQuestion(0);
+                updateProgress();
+            }
+
+            init();
+
+            console.log('🌿 高敏感与内向特质心理测试 · 真诚共鸣版已就绪');
+            console.log('   💡 提示：可使用键盘 A/B/C/D 快速选择选项');
+            console.log('   ⬅ ➡ 方向键切换题目');
+            console.log('   📱 移动端请点击选项按钮');
+        })();
+    </script>
+</body>
+</html>
