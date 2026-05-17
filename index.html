@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高敏感与内向特质心理测试 · 真诚共鸣版</title>
+    <title>高敏感度指数测试 · 看见你与生俱来的细腻感知力</title>
     <style>
         :root {
             --bg: #f7f5f2;
@@ -663,8 +663,8 @@
         <!-- 头部 -->
         <div class="header">
             <div class="header-icon">🌿</div>
-            <h1>高敏感与内向特质测试</h1>
-            <p class="subtitle">一些藏在心底的感受，或许这里都懂</p>
+            <h1>高敏感度指数测试</h1>
+            <p class="subtitle">看见你与生俱来的细腻感知力</p>
         </div>
 
         <!-- 进度条区域 -->
@@ -708,7 +708,7 @@
 
     <script>
         (function() {
-            // ==================== 题目数据（真诚共鸣版） ====================
+            // ==================== 题目数据 ====================
             const questions = [{
                 id: 1,
                 text: '结束一场热闹的聚会后，即使当时很开心，你也会在回家的路上感到一种深深的疲惫，好像能量被悄悄抽走了。',
@@ -893,11 +893,10 @@
 
             // ==================== 状态管理 ====================
             const totalQuestions = questions.length;
-            const userAnswers = new Array(totalQuestions).fill(null); // null = 未作答
+            const userAnswers = new Array(totalQuestions).fill(null);
             let currentIndex = 0;
             let isTransitioning = false;
 
-            // ==================== DOM 元素 ====================
             const progressBar = document.getElementById('progressBar');
             const progressCurrent = document.getElementById('progressCurrent');
             const progressDots = document.getElementById('progressDots');
@@ -913,7 +912,6 @@
             const resultCard = document.getElementById('resultCard');
             const progressArea = document.getElementById('progressArea');
 
-            // ==================== 初始化进度点 ====================
             function buildProgressDots() {
                 progressDots.innerHTML = '';
                 for (let i = 0; i < totalQuestions; i++) {
@@ -925,7 +923,6 @@
             }
             buildProgressDots();
 
-            // ==================== 更新进度条 ====================
             function updateProgress() {
                 const answeredCount = userAnswers.filter(a => a !== null).length;
                 const percentage = Math.round((answeredCount / totalQuestions) * 100);
@@ -935,12 +932,8 @@
                 const dots = progressDots.querySelectorAll('.progress-dot');
                 dots.forEach((dot, i) => {
                     dot.classList.remove('completed', 'active');
-                    if (userAnswers[i] !== null) {
-                        dot.classList.add('completed');
-                    }
-                    if (i === currentIndex) {
-                        dot.classList.add('active');
-                    }
+                    if (userAnswers[i] !== null) dot.classList.add('completed');
+                    if (i === currentIndex) dot.classList.add('active');
                 });
 
                 btnPrev.disabled = currentIndex === 0;
@@ -964,65 +957,45 @@
                 }
             }
 
-            // ==================== 渲染题目 ====================
-            function renderQuestion(index, direction = 'forward') {
+            function renderQuestion(index) {
                 if (index < 0 || index >= totalQuestions) return;
                 currentIndex = index;
                 const q = questions[index];
-
                 questionCard.classList.add('fade-out');
-
                 setTimeout(() => {
                     questionNumber.textContent = `Q${q.id}`;
                     questionText.textContent = q.text;
                     optionsList.innerHTML = '';
-
                     q.options.forEach((optText, optIndex) => {
                         const btn = document.createElement('button');
                         btn.classList.add('option-btn');
                         const letter = String.fromCharCode(65 + optIndex);
                         btn.innerHTML = `
-                                    <span class="option-letter">${letter}</span>
-                                    <span class="option-label">${optText.substring(3).trim()}</span>
-                                `;
+                            <span class="option-letter">${letter}</span>
+                            <span class="option-label">${optText.substring(3).trim()}</span>
+                        `;
                         btn.addEventListener('click', () => {
                             if (isTransitioning) return;
                             selectOption(index, optIndex);
                         });
-
-                        if (userAnswers[index] === optIndex) {
-                            btn.classList.add('selected');
-                        }
-
+                        if (userAnswers[index] === optIndex) btn.classList.add('selected');
                         optionsList.appendChild(btn);
                     });
-
                     questionCard.classList.remove('fade-out');
                     questionCard.classList.add('fade-in');
-                    setTimeout(() => {
-                        questionCard.classList.remove('fade-in');
-                    }, 350);
-
+                    setTimeout(() => questionCard.classList.remove('fade-in'), 350);
                     updateProgress();
                 }, 200);
             }
 
-            // ==================== 选择选项 ====================
             function selectOption(questionIndex, optionIndex) {
                 if (isTransitioning) return;
                 userAnswers[questionIndex] = optionIndex;
-
                 const allOptions = optionsList.querySelectorAll('.option-btn');
                 allOptions.forEach((btn, i) => {
-                    if (i === optionIndex) {
-                        btn.classList.add('selected');
-                    } else {
-                        btn.classList.remove('selected');
-                    }
+                    btn.classList.toggle('selected', i === optionIndex);
                 });
-
                 updateProgress();
-
                 if (questionIndex < totalQuestions - 1) {
                     isTransitioning = true;
                     setTimeout(() => {
@@ -1038,7 +1011,6 @@
                 }
             }
 
-            // ==================== 跳转题目 ====================
             function goToQuestion(index) {
                 if (index < 0 || index >= totalQuestions) return;
                 if (isTransitioning && index !== currentIndex) return;
@@ -1047,13 +1019,9 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // ==================== 按钮事件 ====================
             btnPrev.addEventListener('click', () => {
-                if (currentIndex > 0 && !isTransitioning) {
-                    goToQuestion(currentIndex - 1);
-                }
+                if (currentIndex > 0 && !isTransitioning) goToQuestion(currentIndex - 1);
             });
-
             btnNext.addEventListener('click', () => {
                 if (isTransitioning) return;
                 if (currentIndex < totalQuestions - 1 && userAnswers[currentIndex] !== null) {
@@ -1063,11 +1031,9 @@
                 }
             });
 
-            // ==================== 键盘快捷键 ====================
             document.addEventListener('keydown', (e) => {
                 if (isTransitioning) return;
                 if (resultArea.classList.contains('visible')) return;
-
                 const key = e.key.toLowerCase();
                 if (key === 'a' || key === 'b' || key === 'c' || key === 'd') {
                     const optIndex = key.charCodeAt(0) - 97;
@@ -1087,7 +1053,7 @@
                 }
             });
 
-            // ==================== 显示结果 ====================
+            // ==================== 丰富的结果页内容 ====================
             function showResults() {
                 const allAnswered = userAnswers.every(a => a !== null);
                 if (!allAnswered) {
@@ -1098,107 +1064,137 @@
                         return;
                     }
                 }
-
                 const totalScore = userAnswers.reduce((sum, answer) => sum + answer + 1, 0);
                 const maxScore = totalQuestions * 4;
-
                 let level, levelColor, descriptionHTML;
+                
                 if (totalScore >= 71) {
-                    level = '高度敏感 · 深度内向型';
+                    level = '高度敏感 · 深度感知型';
                     levelColor = '#3d6b57';
                     descriptionHTML = `
-                                <h4>🌙 你拥有一个深邃而敏感的灵魂</h4>
-                                <p>你的得分表明你具有显著的<strong>高敏感（HSP）</strong>与<strong>深度内向</strong>特质。这不是缺陷，而是一种独特的天赋配置。你能够感知到别人忽略的细节，内心世界丰富而细腻。</p>
-                                <h4>✨ 你的光芒：</h4>
-                                <ul>
-                                    <li><strong>深刻的自省力：</strong>你习惯于深入思考，对生命的意义有独特的理解。</li>
-                                    <li><strong>卓越的共情能力：</strong>你能真切地感受到他人的情绪，是很好的倾听者和支持者。</li>
-                                    <li><strong>敏锐的审美触觉：</strong>日常中的点滴美好，在你眼中都可能成为动人的风景。</li>
-                                    <li><strong>珍视深度的关系：</strong>你不喜欢肤浅的社交，但少数几个知己足以滋养你的生命。</li>
-                                </ul>
-                                <h4>🛡 温柔提醒：</h4>
-                                <ul>
-                                    <li>请保护好自己的能量，学会对过度刺激说“不”。</li>
-                                    <li>规律的独处和安静时光，对你来说不是奢侈，而是必需。</li>
-                                    <li>你的敏感不是“想太多”，而是一种深度信息处理方式。</li>
-                                    <li>找到适合你节奏的环境，你的细腻会成为巨大的优势。</li>
-                                </ul>
-                                <p style="margin-top:12px;">你不需要变得“钝感”，世界需要你这样温柔而深刻的灵魂。🌿</p>
-                            `;
+                        <h4>🌙 你的高敏感度指数非常高：你拥有一个深邃而敏感的灵魂</h4>
+                        <p>你属于典型的高敏感人群（HSP）。你的神经系统天生就对细微刺激有着更深的加工和处理能力。这并不是缺陷，而是一种与生俱来的天赋配置——你能看见别人看不见的色彩，听见别人听不见的旋律。</p>
+                        <h4>🧠 你可能常常这样：</h4>
+                        <ul>
+                            <li>在喧闹的环境里待久了，会感到一种从骨头里渗出的疲惫，只想立刻躲回安静角落。</li>
+                            <li>能轻易捕捉到别人脸上闪过的一丝犹豫或难过，甚至替他们感到心疼。</li>
+                            <li>一部电影、一本书、一句歌词就能让你情绪起伏，很久都走不出来。</li>
+                            <li>在做决定前，心里仿佛有一个小剧场，反复预演各种可能的后果。</li>
+                        </ul>
+                        <h4>✨ 这是你的光芒：</h4>
+                        <ul>
+                            <li><strong>深度思考者：</strong>你习惯透过表象看本质，对生命和关系有超越常人的理解。</li>
+                            <li><strong>高度共情者：</strong>你像一块温暖的海绵，能承接他人的情绪，是身边人最信赖的树洞。</li>
+                            <li><strong>细节捕手：</strong>你对美和变化有着极强的感知力，生活在你眼中充满微妙的诗意。</li>
+                        </ul>
+                        <h4>🛡 温柔的行动建议：</h4>
+                        <ul>
+                            <li><strong>保护你的能量边界：</strong>学会说“不”并不是冷漠，而是对自己的保护。每次社交前，可以先预设一个离开的时间。</li>
+                            <li><strong>把独处正式列入日程：</strong>独处不是孤独，而是你最重要的充电方式。每天留一段完全属于自己的安静时光。</li>
+                            <li><strong>重新定义“敏感”：</strong>你的敏感不是脆弱，而是一种高分辨率的人生体验。当你不再否定它，它就会变成你最独特的优势。</li>
+                            <li><strong>寻找同类：</strong>分享你的感受，你会发现世界上有很多和你一样细腻的人，彼此照亮。</li>
+                        </ul>
+                        <p style="margin-top:12px;">请记住，你不必变得“钝感”去适应世界，你只需要找到适合自己的频率，然后温柔地发光。🌿</p>
+                    `;
                 } else if (totalScore >= 56) {
-                    level = '中高敏感 · 偏内向型';
+                    level = '中高敏感 · 细腻感受型';
                     levelColor = '#5b8c7a';
                     descriptionHTML = `
-                                <h4>🌾 你的敏感与内向，是温和而坚韧的力量</h4>
-                                <p>你的得分显示出<strong>较明显的高敏感倾向</strong>和<strong>偏内向</strong>的性格底色。你常常能在安静中找到力量，也能够在适当的时候投入外部世界。</p>
-                                <h4>✨ 你的特质：</h4>
-                                <ul>
-                                    <li>兼具思考的深度和一定的适应力，能够在不同场合调整自己。</li>
-                                    <li>对他人的情绪有着敏锐的雷达，同时也知道何时该抽离保护自己。</li>
-                                    <li>享受独处的自由，也珍惜真诚的对话。</li>
-                                    <li>在很多情境下，你会先观察再行动，这种谨慎常常让你避开麻烦。</li>
-                                </ul>
-                                <h4>🛡 平衡建议：</h4>
-                                <ul>
-                                    <li>注意识别哪些场合会让你感到消耗，预先做好能量管理。</li>
-                                    <li>不要因为别人的“你太敏感”而否定自己的感受，你的感觉是真实的。</li>
-                                    <li>给自己足够的时间去做决定和消化经历，这很正常。</li>
-                                </ul>
-                            `;
+                        <h4>🌾 你的高敏感度指数较高：细腻是你的第二层皮肤</h4>
+                        <p>你身上有着清晰的高敏感倾向，常常在安静和热闹之间寻找平衡。你能够洞察到很多别人忽略的东西，但也有能力在需要的时候戴上“保护罩”。</p>
+                        <h4>🧠 你的日常可能是：</h4>
+                        <ul>
+                            <li>聚会时也能谈笑风生，但事后需要更长的独处时间来恢复内心的平静。</li>
+                            <li>对环境和他人情绪的变化很敏锐，有时这让你很贴心，有时也会让你感到负担。</li>
+                            <li>享受深度的人际连接，面对肤浅的客套会感到无趣和消耗。</li>
+                            <li>一杯咖啡就可能打乱你一整天的节奏，身体对刺激的反应比一般人明显。</li>
+                        </ul>
+                        <h4>✨ 你独有的天赋：</h4>
+                        <ul>
+                            <li><strong>灵活的深度：</strong>你能在不同社交场合间切换，同时又保留着深刻的内省习惯。</li>
+                            <li><strong>善解人意的观察者：</strong>你常常是那个最先发现朋友不开心的人，却不会让对方感到压力。</li>
+                            <li><strong>创造力源泉：</strong>在安静的环境中，你的创造力和专注力会达到峰值。</li>
+                        </ul>
+                        <h4>🛡 平衡身心的小建议：</h4>
+                        <ul>
+                            <li><strong>学会“能量记账”：</strong>把让你消耗的活动和让你充电的活动罗列出来，有意识地调配。</li>
+                            <li><strong>停止自我批判：</strong>如果有人再说你“太敏感”，请在心里告诉自己：“这是我的天赋，不是过错。”</li>
+                            <li><strong>建立过渡仪式：</strong>在从外部世界回到个人空间时，给自己一个缓冲的小仪式，比如洗手、换家居服、泡一杯低因花茶。</li>
+                        </ul>
+                        <p style="margin-top:12px;">你的细腻是一种力量，它让你在粗糙的世界里，依然能保持一份温柔的触角。🌾</p>
+                    `;
                 } else if (totalScore >= 41) {
-                    level = '中等敏感 · 混合型';
+                    level = '中等敏感 · 灵活均衡型';
                     levelColor = '#6b9080';
                     descriptionHTML = `
-                                <h4>🌤 你游走在安静与热闹之间，拥有灵活的弹性</h4>
-                                <p>你的得分表明<strong>中等的敏感度</strong>和一种<strong>混合型</strong>的内在倾向。你并非极端内向，但也能深刻体会独处的价值；你并非粗糙，但也懂得屏蔽不必要的干扰。</p>
-                                <h4>✨ 你的样子：</h4>
-                                <ul>
-                                    <li>你可以适应不同的社交节奏，但内心清楚自己的舒适区在哪里。</li>
-                                    <li>有时会被细腻的情感触动，有时也能轻松地让它过去。</li>
-                                    <li>对生活既有务实的应对，也有诗意的觉察。</li>
-                                </ul>
-                                <h4>🛡 探索方向：</h4>
-                                <ul>
-                                    <li>留意自己在什么状态下最放松、最有创造力，然后去创造那样的时刻。</li>
-                                    <li>你身上或许同时住着一个爱安静的灵魂和一个爱世界的孩子，两者并不矛盾。</li>
-                                </ul>
-                            `;
+                        <h4>🌤 你的高敏感度指数居中：你拥有灵活的内在弹性</h4>
+                        <p>你游走在敏感与钝感之间，能够根据不同情境调整自己的“接收器”。你既能享受热闹的烟火气，也能在独处中找到宁静的喜悦。这种平衡是一种难得的礼物。</p>
+                        <h4>🧠 你或许是这样：</h4>
+                        <ul>
+                            <li>在某些时刻会被细腻的情感深深打动，而在另一些时候又能轻松地置身事外。</li>
+                            <li>对于环境和他人情绪有感知力，但不至于被淹没，能够较快地恢复稳定。</li>
+                            <li>你不排斥社交，但也很清楚自己何时需要按下暂停键，给自己留白。</li>
+                        </ul>
+                        <h4>✨ 你的优势在于：</h4>
+                        <ul>
+                            <li><strong>适应力强：</strong>你就像一座桥，能够连接敏感者和钝感者的世界，理解双方的语言。</li>
+                            <li><strong>自我觉察：</strong>你通常能清楚地意识到自己的能量状态，并主动做出调整。</li>
+                        </ul>
+                        <h4>🛡 继续探索的方向：</h4>
+                        <ul>
+                            <li><strong>记录你的“高敏感时刻”：</strong>留意那些让你特别感动、不适或充满灵感的瞬间，它们藏着关于你的重要线索。</li>
+                            <li><strong>善待自己的节奏：</strong>不必强求自己永远外向或永远安静，允许自己根据当下的需要流动。</li>
+                        </ul>
+                        <p style="margin-top:12px;">你的弹性是你最宝贵的资源，让你既能够温柔地拥抱世界，也能够妥帖地照顾自己。🌤️</p>
+                    `;
                 } else if (totalScore >= 26) {
-                    level = '较低敏感 · 偏外向型';
+                    level = '较低敏感 · 稳定外放型';
                     levelColor = '#8a9e8f';
                     descriptionHTML = `
-                                <h4>☀️ 你的能量更多向外伸展，世界是你的游乐场</h4>
-                                <p>你的得分反映出<strong>较低程度的敏感特质</strong>和<strong>偏外向</strong>的风格。热闹的环境和多样的刺激对你而言更像是能量的来源，而非负担。</p>
-                                <h4>✨ 你的优势：</h4>
-                                <ul>
-                                    <li>适应力强，能够轻松应对变化和突发状况。</li>
-                                    <li>情绪通常比较稳定，不容易被小事困扰。</li>
-                                    <li>乐于接触新的人群和事物，生活体验丰富。</li>
-                                </ul>
-                                <h4>🛡 友善提醒：</h4>
-                                <ul>
-                                    <li>你的韧性是一种礼物，但也别忘了偶尔停下来听听内心细微的声音。</li>
-                                    <li>你身边可能就有高度敏感的朋友，你的轻松或许是他们羡慕的特质。</li>
-                                </ul>
-                            `;
+                        <h4>☀️ 你的高敏感度指数偏低：你的能量更多向外绽放</h4>
+                        <p>你通常不会被细微的刺激轻易影响，情绪状态相对稳定，能够轻松地处理多任务和变化。热闹的环境对你而言不是消耗，反而常常是能量的来源。</p>
+                        <h4>🧠 你的日常可能是：</h4>
+                        <ul>
+                            <li>聚会结束后依然精力充沛，甚至还想继续下一场。</li>
+                            <li>不太会过度解读别人的一句话或一个眼神，事情过去就过去了。</li>
+                            <li>适应新环境的能力很强，计划改变时也能快速找到新的方向。</li>
+                        </ul>
+                        <h4>✨ 你的光芒：</h4>
+                        <ul>
+                            <li><strong>心理韧性：</strong>你就像一棵在风中依然挺拔的树，能够较快地从压力和挫折中恢复。</li>
+                            <li><strong>社交推动者：</strong>你常常是人群中的活跃分子，能够轻松带动气氛。</li>
+                        </ul>
+                        <h4>🛡 小小的提醒：</h4>
+                        <ul>
+                            <li>你身边或许就有高度敏感的朋友，你的轻松对他们来说是一种治愈。</li>
+                            <li>偶尔尝试安静地独处一会儿，去感受那些平日里被忽略的细微美好，或许会打开一扇新的感知之门。</li>
+                        </ul>
+                        <p style="margin-top:12px;">你的稳定和外放是很多人羡慕的特质，继续保持这份阳光般明亮的状态吧。☀️</p>
+                    `;
                 } else {
-                    level = '低敏感 · 外向型';
+                    level = '低敏感 · 活力充沛型';
                     levelColor = '#9aab9d';
                     descriptionHTML = `
-                                <h4>🌞 你带着明亮的能量，轻松穿梭于人群之间</h4>
-                                <p>你的得分展示出<strong>较低敏感度</strong>和<strong>明显的外向</strong>特质。刺激和社交通常让你感到兴奋和充实，你能从外部世界直接汲取养分。</p>
-                                <h4>✨ 你的色彩：</h4>
-                                <ul>
-                                    <li>精力充沛，喜欢活跃的环境，往往是群体中的带动者。</li>
-                                    <li>对压力和挫折有较强的心理韧性，恢复很快。</li>
-                                    <li>不惧怕尝试和改变，生活充满动态感。</li>
-                                </ul>
-                                <h4>🛡 小小的视角：</h4>
-                                <ul>
-                                    <li>也许有时难以理解为什么有些人会那么“玻璃心”，但请尊重每一种敏感的合理性。</li>
-                                    <li>你的存在本身就能给敏感者带来一种轻松的氛围，这是很好的互补。</li>
-                                </ul>
-                            `;
+                        <h4>🌞 你的高敏感度指数很低：你带着明亮的能量穿梭于世界</h4>
+                        <p>你的神经系统对刺激有着较高的阈值，这意味着你通常在喧闹和忙碌中依然感到自如。你热爱尝试新鲜事物，对变化持开放态度，是很多人眼中的“小太阳”。</p>
+                        <h4>🧠 你的样子：</h4>
+                        <ul>
+                            <li>很难理解为什么有人会为了一句话难过好几天，因为你的情绪通常直来直往，去得也快。</li>
+                            <li>人群让你兴奋，独处太久反而会让你感到无聊和低落。</li>
+                            <li>你可以同时处理好几件事，而且乐在其中，切换任务时很少感到焦虑。</li>
+                        </ul>
+                        <h4>✨ 你的优势：</h4>
+                        <ul>
+                            <li><strong>行动力强：</strong>不纠结、不内耗，想到就去做的风格让你在工作和生活中效率很高。</li>
+                            <li><strong>感染力：</strong>你的开朗和活力很容易感染身边的人，你是团队里的开心果和推进器。</li>
+                        </ul>
+                        <h4>🛡 温柔的视角：</h4>
+                        <ul>
+                            <li>请理解世界上有一群高度敏感的人，他们需要更多安静和理解。你的接纳对他们意义重大。</li>
+                            <li>偶尔给自己一点“离线”的时间，去感受一下慢节奏里的深度，或许也能带来不同的快乐。</li>
+                        </ul>
+                        <p style="margin-top:12px;">你的活力就像一道明亮的光，世界因你的存在而更加热闹和生动。🌞</p>
+                    `;
                 }
 
                 questionCard.style.display = 'none';
@@ -1207,41 +1203,37 @@
                 document.querySelector('.header').style.marginBottom = '20px';
 
                 resultCard.innerHTML = `
-                            <div class="result-score-circle">
-                                <div class="result-score-inner">
-                                    <div class="result-score-number">${totalScore}</div>
-                                    <div class="result-score-total">/ ${maxScore} 分</div>
-                                </div>
-                            </div>
-                            <div class="result-level" style="background:${levelColor}15;color:${levelColor};border:1px solid ${levelColor}30;">
-                                ${level}
-                            </div>
-                            <div class="result-description">
-                                ${descriptionHTML}
-                            </div>
-                            <button class="btn-restart" onclick="location.reload();">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                                重新测试
-                            </button>
-                        `;
+                    <div class="result-score-circle">
+                        <div class="result-score-inner">
+                            <div class="result-score-number">${totalScore}</div>
+                            <div class="result-score-total">/ ${maxScore} 分</div>
+                        </div>
+                    </div>
+                    <div class="result-level" style="background:${levelColor}15;color:${levelColor};border:1px solid ${levelColor}30;">
+                        ${level}
+                    </div>
+                    <div class="result-description">
+                        ${descriptionHTML}
+                    </div>
+                    <button class="btn-restart" onclick="location.reload();">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                        重新测试
+                    </button>
+                `;
 
                 resultArea.classList.add('visible');
                 resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // ==================== 启动测试 ====================
             function init() {
                 renderQuestion(0);
                 updateProgress();
             }
-
             init();
 
-            console.log('🌿 高敏感与内向特质心理测试 · 真诚共鸣版已就绪');
+            console.log('🌿 高敏感度指数测试已就绪');
             console.log('   💡 提示：可使用键盘 A/B/C/D 快速选择选项');
-            console.log('   ⬅ ➡ 方向键切换题目');
-            console.log('   📱 移动端请点击选项按钮');
         })();
     </script>
 </body>
